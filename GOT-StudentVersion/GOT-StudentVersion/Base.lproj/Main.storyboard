@@ -135,6 +135,7 @@
                                             <outlet property="evenImage" destination="qoc-fY-yTf" id="rlO-zV-gF4"/>
                                             <outlet property="nameLabel" destination="qRL-gR-YfY" id="GYc-Gd-Bfk"/>
                                             <outlet property="ssnDetailLabel" destination="8PL-sb-ePY" id="nov-2r-bAG"/>
+                                            <segue destination="xhE-M1-EiW" kind="show" id="EjM-yf-TDy"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -269,4 +270,7 @@
             <point key="canvasLocation" x="2052" y="213.64317841079463"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="QjU-2F-CZR"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -9,12 +9,12 @@
 import UIKit
 
 class SeasonsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
- 
+    
     
     var episodes = [GOTEpisode]()
     var searchBar = UISearchBar()
     
-
+    
     @IBOutlet weak var searchBarButton: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
@@ -46,6 +46,7 @@ class SeasonsViewController: UIViewController, UITableViewDelegate, UITableViewD
         showSearchBar()
     }
     
+//    https://stackoverflow.com/questions/24593599/how-to-animate-add-uisearchbar-on-top-of-uinavigationbar
     func showSearchBar() {
         searchBar.alpha = 0
         navigationItem.titleView = searchBar
@@ -57,20 +58,16 @@ class SeasonsViewController: UIViewController, UITableViewDelegate, UITableViewD
         })
     }
     
-//    func hideSearchBar() {
-//        navigationItem.setLeftBarButton(searchBarButton, animated: true)
-//        UIView.animate(withDuration: 0.3, animations: {
-//          self.navigationItem.titleView =
-////////            self.logoImageView.alpha = 1
-//        }, completion: { finished in
-//////
-//        })
+    func hideSearchBar() {
+        navigationItem.titleView = nil
+    }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        hideSearchBar()
 //    }
-////
     
     
     
-
     // MARK: - Data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredEpisodeArr.count
@@ -80,37 +77,37 @@ class SeasonsViewController: UIViewController, UITableViewDelegate, UITableViewD
         let episode = filteredEpisodeArr[indexPath.row]
         let leftAlligned = episode.season % 2 == 1
         if leftAlligned {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "oddSeasons", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "oddSeasons", for: indexPath)
             if let cell = cell as? OddSeasonTableViewCell {
-            let rowToSetUp = indexPath.row
-            let episodeToSetUp = episodes[rowToSetUp]
-        cell.nameLabel.text = episodeToSetUp.name
-        cell.ssnDetailLabel.text = "S:\(episodeToSetUp.season) E: \(episodeToSetUp.number)"
-        cell.oddImage.image = UIImage(named: episodeToSetUp.mediumImageID)
-        return cell
-    }
-        }else {
+                let rowToSetUp = indexPath.row
+                let episodeToSetUp = filteredEpisodeArr[rowToSetUp]
+                cell.nameLabel.text = episodeToSetUp.name
+                cell.ssnDetailLabel.text = "S:\(episodeToSetUp.season) E: \(episodeToSetUp.number)"
+                cell.oddImage.image = UIImage(named: episodeToSetUp.mediumImageID)
+                return cell
+            }
+        } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "evenSeasons", for: indexPath)
             if let cell = cell as? EvenSeasonTableViewCell {
                 let rowToSetUp = indexPath.row
-                let episodeToSetUp = episodes[rowToSetUp]
+                let episodeToSetUp = filteredEpisodeArr[rowToSetUp]
                 cell.nameLabel.text = episodeToSetUp.name
                 cell.ssnDetailLabel.text = "S:\(episodeToSetUp.season) E: \(episodeToSetUp.number)"
                 cell.evenImage.image = UIImage(named: episodeToSetUp.mediumImageID)
-            return cell
+                return cell
             }
         }
         return UITableViewCell()
-        }
-        
-        
+    }
+    
+    
     
     // MARK: - Navigation
-     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination =  segue.destination as? EpisodeDetailsViewController {
             let selectedRow = tableView.indexPathForSelectedRow!.row
-            let selectedEpisode = self.episodes[selectedRow]
+            let selectedEpisode = self.filteredEpisodeArr[selectedRow]
             destination.episode = selectedEpisode
         }
     }
@@ -126,6 +123,7 @@ class SeasonsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.endEditing(true)
+        hideSearchBar()
     }
-
+    
 }
