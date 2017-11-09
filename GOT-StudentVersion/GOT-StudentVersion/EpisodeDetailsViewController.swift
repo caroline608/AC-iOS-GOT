@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EpisodeDetailsViewController: UIViewController {
+class EpisodeDetailsViewController: UIViewController, UIScrollViewDelegate {
 
     var episode: GOTEpisode?
     
@@ -19,9 +19,13 @@ class EpisodeDetailsViewController: UIViewController {
     @IBOutlet weak var runTimeLabel: UILabel!
     @IBOutlet weak var airDateLabel: UILabel!
     @IBOutlet weak var summaryTextView: UITextView!
+   
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         guard let episode = episode else {
             return
         }
@@ -33,12 +37,8 @@ class EpisodeDetailsViewController: UIViewController {
         self.airDateLabel.text = "Airdate: \(episode.airdate)"
         self.summaryTextView.text = episode.summary
         
-
-        
     }
 
-  
-    
 
     /*
     // MARK: - Navigation

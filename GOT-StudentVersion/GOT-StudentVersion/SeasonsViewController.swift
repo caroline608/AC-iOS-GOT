@@ -13,6 +13,7 @@ class SeasonsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var episodes = [GOTEpisode]()
     var searchBar = UISearchBar()
+
     
     
     @IBOutlet weak var searchBarButton: UIBarButtonItem!
@@ -27,6 +28,20 @@ class SeasonsViewController: UIViewController, UITableViewDelegate, UITableViewD
         guard let searchTerm = searchTerm, searchTerm != "" else {
             return episodes
         }
+//        if let scopeTitles = self.searchBar.scopeButtonTitles {
+//            let selectedIndex = self.searchBar.selectedScopeButtonIndex
+//            let filteringCriteria = scopeTitles[selectedIndex]
+//            switch filteringCriteria {
+//            case "Title":
+//                return episodes.filter{(episode) in episode.name.lowercased().contains(searchTerm.lowercased())
+//                }
+//            case "Season":
+//                return episodes.filter{String($0.season).contains(searchTerm)}
+//            default:
+//                return episodes
+//            }
+//        }
+//        return episodes
         return episodes.filter{$0.name.lowercased().contains(searchTerm.lowercased())}
     }
     
@@ -125,5 +140,4 @@ class SeasonsViewController: UIViewController, UITableViewDelegate, UITableViewD
         searchBar.endEditing(true)
         hideSearchBar()
     }
-    
 }
